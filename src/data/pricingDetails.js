@@ -5,7 +5,7 @@ export const plansInfo = [
         monthlyPrice: '100',
         yearlyPrice: '1000',
         videQuality: 'Good',
-        resolution: '480P',
+        resolution: '480p',
         devices: ['Phone'],
         activeScreen: 1
     },
@@ -15,7 +15,7 @@ export const plansInfo = [
         monthlyPrice: '200',
         yearlyPrice: '2000',
         videQuality: 'Good',
-        resolution: '720P',
+        resolution: '720p',
         devices: ['Phone', 'Tablet'],
         activeScreen: 3
     },
@@ -25,7 +25,7 @@ export const plansInfo = [
         monthlyPrice: '500',
         yearlyPrice: '5000',
         videQuality: 'Better',
-        resolution: '1080P',
+        resolution: '1080p',
         devices: ['Phone', 'Tablet', 'Computer'],
         activeScreen: 5
     },

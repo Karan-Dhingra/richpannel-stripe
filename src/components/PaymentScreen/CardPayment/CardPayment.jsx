@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+// import React, { useState } from 'react'
 import {
     useStripe,
     useElements,
@@ -6,71 +6,35 @@ import {
 } from '@stripe/react-stripe-js'
 import styles from './CardPayment.module.css'
 import { useNavigate } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { subscribeAction } from '../../../redux/actions/userActions'
+import Loader from '../../Loader/Loader'
 
 const CardPayment = () => {
+    const dispatch = useDispatch()
     const navigate = useNavigate()
     const stripe = useStripe()
     const elements = useElements()
 
-    const [errorMessage, setErrorMessage] = useState(null)
+    const {loading} = useSelector((state) => state.subscribeReducer)
+    const {currentPlan} = useSelector((state) => state.subscribePlansReducer)
+
+    // const [cardLoading, setCardLoading] = useState(true)
 
     const handleSubmit = async (e) => {
         e?.preventDefault()
 
         if (!stripe || !elements) {
-            // Stripe.js has not loaded yet. Make sure to disable
-            // form submission until Stripe.js has loaded.
             return
         }
 
-        const { error, paymentMethod } = await stripe.createPaymentMethod({
-            type: 'card',
-            card: elements.getElement(CardElement),
-        })
-
-        if (!error) {
-            try {
-                console.log(paymentMethod)
-                const { id } = paymentMethod
-                console.log(id)
-                navigate('checkout')
-
-                // dispatch(
-                //     placeOrderAction(
-                //         id,
-                //         merchCount,
-                //         checkoutData.totalPrice +
-                //             getShippingPrice(data?.orderDetails?.country, cartData.weight),
-                //         shippingAddress,
-                //         userDetails,
-                //         order,
-                //         toggleDrawer,
-                //         setCheckout,
-                //         setStep,
-                //         step,
-                //         setPaymentCompleteModal,
-                //         setPaymentFailedModal,
-                //         SetTransactionProgress,
-                //         setPaymentPausedModal,
-                //         stripe,
-                //         elements,
-                //         CardNumberElement
-                //     )
-                // )
-            } catch (error) {
-                console.log('Error', error)
-                setErrorMessage(error)
-                // SetTransactionProgress(false)
-                // setPaymentFailedModal({
-                //     status: true,
-                //     data: error,
-                // })
-            }
-        } else {
-            console.log(error.message)
-            setErrorMessage(error.message)
-        }
+        dispatch(subscribeAction(stripe, elements, CardElement, currentPlan?.planType === 'Monthly' ? currentPlan?.monthlyPrice : currentPlan?.yearlyPrice, currentPlan, navigate))
     }
+
+    // if(cardLoading)
+    //     return <div className={styles.payment_card} style={{height: '300px', alignItems: 'center', justifyContent: 'center'}}>
+    //         <Loader style={{color: '#1F4D91'}} size="3rem" />
+    //     </div>
 
     return (
         <div className={styles.payment_card}>
@@ -81,12 +45,20 @@ const CardPayment = () => {
                 </div>
 
                 <div className={styles.card_payment_holder}>
-                        <CardElement id="card-element"  options={{
-                            hidePostalCode: true,
-                        }} />
+                        <CardElement
+                            // onReady={() => {setCardLoading(false)}}
+                            id="card-element"
+                            options={{
+                                hidePostalCode: true,
+                            }}
+                        />
                 </div>
-                <button type='submit' className={styles.confirm_payment}>Confirm Payment</button>
-                {/* <pre>{errorMessage}	</pre> */}
+
+                <div className={`flex flex-col gap-2`}>
+                    <button type='submit' className={styles.confirm_payment} disabled={loading} >{loading && <Loader style={{color: '#FFF'}} size={"1rem"} /> }{loading ? 'Confirming...' : 'Confirm Payment'}</button>
+                    <p className='opacity-80 text-[12px] italic'>Confirming Will Update <span className='underline underline-offset-1 cursor-pointer' onClick={() => navigate('/payment/checkout')}>Current</span> Plan</p>
+                </div>
+
             </form>
 
             <div className={styles.order_summary}>
@@ -94,15 +66,15 @@ const CardPayment = () => {
                 <div className='flex w-full flex-col'>
                     <div className={styles.row_align}>
                         <h2>Plan Name</h2>
-                        <h3>Basic</h3>
+                        <h3>{currentPlan?.planName}</h3>
                     </div>
                     <div className={styles.row_align}>
                         <h2>Billing Cycle</h2>
-                        <h3>Monthly</h3>
+                        <h3>{currentPlan?.planType}</h3>
                     </div>
                     <div className={styles.row_align}>
                         <h2>Plan Price</h2>
-                        <h3>200/mo</h3>
+                        <h3>₹{' '}{currentPlan?.planType === 'Monthly' ? `${currentPlan?.monthlyPrice}/mo` : `${currentPlan?.yearlyPrice}/yr`}</h3>
                     </div>
                 </div>
             </div>

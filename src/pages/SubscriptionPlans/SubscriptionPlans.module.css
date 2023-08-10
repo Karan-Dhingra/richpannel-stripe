@@ -52,9 +52,6 @@
 .planNameBox_selected::before{
     content: '';
     position: absolute;
-    /* height: 20px;
-    width: 20px;
-    /* background-color: #1f4c91; */
     bottom: -10px;
 
     width: 0px;
@@ -124,6 +121,7 @@
     padding: 10px 15px;
     color: #1f4c91;
     /* height: 100%; */
+    font-weight: 600;
     z-index: 2;
 }
 

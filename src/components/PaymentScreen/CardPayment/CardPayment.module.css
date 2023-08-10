@@ -90,4 +90,7 @@
     padding: 8px 12px;
     border-radius: 3px;
     font-size: 13px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
 }

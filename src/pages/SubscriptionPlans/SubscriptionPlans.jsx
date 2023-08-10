@@ -1,25 +1,39 @@
 import { useNavigate } from 'react-router-dom'
-import { plansInfo } from '../../data/pricingDetails'
 import styles from './SubscriptionPlans.module.css'
 import React, { useState } from 'react'
+import { selectPlan } from '../../redux/actions/userActions'
+import { useDispatch, useSelector } from 'react-redux'
+import Loader from '../../components/Loader/Loader'
 
 const SubscriptionPlans = () => {
+    const dispatch = useDispatch()
     const navigate = useNavigate()
 
-    const [activePlan, setActivePlan] = useState('Mobile')
-    const [planType, setPlanType] = useState('MONTHLY')
+    const {userInfo} = useSelector((state) => state.userLoginReducer)
+    const { loading, plans: plansInfo } = useSelector((state) => state.getPlansReducer)
 
+    const [activePlan, setActivePlan] = useState('Mobile')
+    const [planType, setPlanType] = useState('Monthly')
+
+    if(loading || plansInfo?.length === 0){
+        return <div className='h-full w-full flex items-center justify-center'>
+            <div className='flex items-center flex-col gap-2'>
+                <Loader size="3rem" style={{color: '#1F4D91'}} />
+                <span className='opacity-80 text-[14px]'>Loading...</span>
+            </div>
+        </div>
+    }
     return (
         <div className={styles.page_wrapper}>
             <h1 className={styles.heading}>Choose the right plan for you</h1>
 
-            <main className={styles.subscription_container}>
+            {plansInfo?.length > 0 && <main className={styles.subscription_container}>
                 <div className={styles.heading_holder}>
                     <div className={styles.header}>
                         <div className={styles.switch_holder}>
-                            <div className={`${styles.switch_btn} ${planType === 'MONTHLY' ? styles.left : styles.right}`}>
-                                <button className={planType === 'MONTHLY' ? styles.btn_txt_slctd : styles.btn_txt} onClick={() => setPlanType('MONTHLY')}>Monthly</button>
-                                <button className=  {planType === 'YEARLY' ? styles.btn_txt_slctd : styles.btn_txt} onClick={() => setPlanType('YEARLY')}>Yearly</button>
+                            <div className={`${styles.switch_btn} ${planType === 'Monthly' ? styles.left : styles.right}`}>
+                                <button className={planType === 'Monthly' ? styles.btn_txt_slctd : styles.btn_txt} onClick={() => setPlanType('Monthly')}>Monthly</button>
+                                <button className=  {planType === 'Yearly' ? styles.btn_txt_slctd : styles.btn_txt} onClick={() => setPlanType('Yearly')}>Yearly</button>
                             </div>
                         </div>
                         <div className={`${styles.grid_row}`} style={{justifyContent: 'flex-start', opacity: 0.85}} >
@@ -43,7 +57,7 @@ const SubscriptionPlans = () => {
                         </button>
 
                         <div className={`${styles.grid_row}`} style={{opacity: plan.planName === activePlan ? '1' : '', color: activePlan === plan.planName ? '#1f4c91' : ''}}>
-                        ₹{' '}{planType === 'MONTHLY' ? plan.monthlyPrice : plan.yearlyPrice}
+                        ₹{' '}{planType === 'Monthly' ? plan.monthlyPrice : plan.yearlyPrice}
                         </div>
                         <div className={`${styles.grid_row}`} style={{opacity: plan.planName === activePlan ? '1' : '', color: activePlan === plan.planName ? '#1f4c91' : ''}}>
                             {plan.videQuality}
@@ -60,9 +74,16 @@ const SubscriptionPlans = () => {
                         </div>
                     </div>
                 ))}
-            </main>
+            </main>}
 
-            <button className={styles.next_btn} onClick={() => navigate('/payment')}>Next</button>
+            {plansInfo?.length > 0 && <div className='flex items-center flex-col gap-2'>
+                <button className={styles.next_btn} onClick={() => {
+                    dispatch(selectPlan({...plansInfo.filter(planInfo => planInfo.planName === activePlan)[0], planType}))
+                    navigate('/payment')
+                }}>Next</button>
+
+                {userInfo?.planName && <button className='opacity-80 text-[12px] italic underline' onClick={() => navigate('/payment/checkout')}>{userInfo?.isSubscribed ? 'You have already subscribed!' : 'Your Previous Plan!'}</button>}
+            </div>}
         </div>
     )
 }
