@@ -1,0 +1,32 @@
+.input_holder{
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    width: 100%;
+}
+
+.input{
+    width: 100%;
+    outline: none;
+    background: transparent;
+
+    border: 1.2px solid #c2c2c2;
+    border-radius: 4px;
+    padding: 10px 10px;
+
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 20px;
+    display: flex;
+    align-items: center;
+
+    color: #555;
+}
+
+.label{
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 20px;
+    color: #535353;
+}

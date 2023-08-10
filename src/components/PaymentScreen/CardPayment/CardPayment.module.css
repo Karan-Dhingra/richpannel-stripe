@@ -1,0 +1,93 @@
+.payment_card{
+    display: flex;
+    width: 700px;
+    background-color: #FFF;
+    border-radius: 8px;
+    gap: 15px;
+    overflow: hidden;
+}
+
+.card_payment_holder{
+    width: 100%;
+    /* display: inline-flex; */
+    align-items: center;
+    padding: 12px;
+    justify-content: space-between;
+
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.stripe_component{
+    width: 50%
+}
+
+.stripe_component_expiry{
+    width: 60px;
+}
+
+.stripe_component_cvc{
+    width: 40px;
+}
+
+.order_summary{
+    background: #f4f5f7;
+    width: 300px;
+    padding: 40px 25px;
+    gap: 20px;
+    flex-direction: column;
+    display: flex;
+}
+
+.order_summary h1{
+    font-weight: 500;
+    font-size: 20px;
+}
+
+.row_align{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #dadada;
+    padding: 5px;
+}
+
+.row_align h2{
+    font-size: 12px;
+    font-weight: 450;
+    opacity: 0.8;
+}
+
+.row_align h3{
+    font-size: 12px;
+    font-weight: 600;
+    opacity: 0.8;
+}
+
+.card_form{
+    width: 400px;
+    padding: 40px 25px;
+    gap: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.card_form h1{
+    font-size: 24px;
+    opacity: 0.8;
+    font-weight: 600;
+}
+
+.card_form p{
+    font-size: 12px;
+    opacity: 0.7;
+}
+
+.confirm_payment{
+    background: #1F4D91;
+    color: #FFF;
+    width: fit-content;
+    padding: 8px 12px;
+    border-radius: 3px;
+    font-size: 13px;
+}

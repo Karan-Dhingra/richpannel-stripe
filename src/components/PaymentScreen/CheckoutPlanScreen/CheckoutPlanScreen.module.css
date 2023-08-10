@@ -1,0 +1,98 @@
+.checkout_card{
+    display: flex;
+    flex-direction: column;
+    width: 450px;
+    padding: 15px 20px;
+    padding-bottom: 25px;
+    background-color: #FFF;
+    border-radius: 18px;
+    gap: 15px;
+}
+
+.top_heading{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.heading{
+    font-weight: 500;
+    font-size: 20px;
+}
+
+.activeStatus{
+    padding: 1px 4px;
+    background: #acd1ff;
+    border-radius: 4px;
+    color: #3969b0;
+    font-weight: 500;
+    font-size: 11px;
+}
+
+.cancelStatus{
+    padding: 1px 4px;
+    background: #faeff0;
+    border-radius: 4px;
+    color: #e57975;
+    font-weight: 500;
+    font-size: 11px;
+}
+
+.cancel_btn{
+    color: #3d65a0;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.main_details{
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.plan_name{
+    opacity: 0.6;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.plan_devices{
+    color: #222;
+    opacity: 0.5;
+    font-size: 12px;
+}
+
+.change_plan_btn{
+    border: 1px solid #4269a1;
+    padding: 4px;
+    width: fit-content;
+    padding: 5px 10px;
+    border-radius: 5px;
+    color: #4269a1;
+    font-weight: 500;
+    font-size: 12px;
+}
+
+.footer_txt{
+    font-size: 11px;
+    font-weight: 500;
+    opacity: 0.8;
+    background: #f4f4f4;
+    padding: 4px;
+    border-radius: 2px;
+}
+
+.main_amt{
+    display: flex;
+    align-items: center;
+}
+
+.main_amt h1{
+    font-family: 'Poppins';
+    font-weight: 600;
+    font-size: 25px;
+}
+
+.main_amt span{
+    font-size: 18px;
+}
