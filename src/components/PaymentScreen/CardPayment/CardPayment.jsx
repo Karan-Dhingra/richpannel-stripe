@@ -18,6 +18,7 @@ const CardPayment = () => {
 
     const {loading} = useSelector((state) => state.subscribeReducer)
     const {currentPlan} = useSelector((state) => state.subscribePlansReducer)
+    const {userInfo} = useSelector((state) => state.userLoginReducer)
 
     // const [cardLoading, setCardLoading] = useState(true)
 
@@ -56,7 +57,7 @@ const CardPayment = () => {
 
                 <div className={`flex flex-col gap-2`}>
                     <button type='submit' className={styles.confirm_payment} disabled={loading} >{loading && <Loader style={{color: '#FFF'}} size={"1rem"} /> }{loading ? 'Confirming...' : 'Confirm Payment'}</button>
-                    <p className='opacity-80 text-[12px] italic'>Confirming Will Update <span className='underline underline-offset-1 cursor-pointer' onClick={() => navigate('/payment/checkout')}>Current</span> Plan</p>
+                    {userInfo?.planType && <p className='opacity-80 text-[12px] italic'>Confirming Will Update <span className='underline underline-offset-1 cursor-pointer' onClick={() => navigate('/payment/checkout')}>Current</span> Plan</p>}
                 </div>
 
             </form>
